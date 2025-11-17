@@ -48,14 +48,22 @@ jobs:
    #    jf config use demo
    # This action creates a new test file and uploads it to Artifactory   
 
+
+  - name: Convert repo_id to lowercase
+    run: |
+      REPO_ID="${{ github.event.inputs.repo_id }}"
+      REPO_ID_LOWER="${REPO_ID,,}"
+      echo "REPO_ID_LOWER=$REPO_ID_LOWER" >> $GITHUB_ENV
+      echo "Lowercase: $REPO_ID_LOWER"
+      
    - name: Build Docker Project and Push Docker image
      run: |
        docker build \
         --build-arg HF_REPO_ID=${{ github.event.inputs.repo_id }} \
-        -t soleng.jfrog.io/kk-docker-local/${{ toLower(github.event.inputs.repo_id) }}:$GITHUB_RUN_NUMBER . 
+        -t soleng.jfrog.io/kk-docker-local/$REPO_ID_LOWER:$GITHUB_RUN_NUMBER . 
         
-       jf docker push soleng.jfrog.io/kk-docker-local/${{ toLower(github.event.inputs.repo_id) }}:$GITHUB_RUN_NUMBER --build-name=$JOB_NAME --build-number=$GITHUB_RUN_NUMBER  --project=$JFrog_Project
-       jf docker scan soleng.jfrog.io/kk-docker-local/${{ toLower(github.event.inputs.repo_id) }}:$GITHUB_RUN_NUMBER --watches=docker-watch  --fail=false
+       jf docker push soleng.jfrog.io/kk-docker-local/$REPO_ID_LOWER:$GITHUB_RUN_NUMBER --build-name=$JOB_NAME --build-number=$GITHUB_RUN_NUMBER  --project=$JFrog_Project
+       jf docker scan soleng.jfrog.io/kk-docker-local/$REPO_ID_LOWER:$GITHUB_RUN_NUMBER --watches=docker-watch  --fail=false
 
    # This action publishes the build information to Artifactory and deletes older builds
    - name: Publish Build-Info to Artifactory
