@@ -18,6 +18,6 @@ ENV HF_REVISION=${HF_REVISION}
 ENV HF_LOCAL_DIR=${HF_LOCAL_DIR}
 
 # 使用 build arg 运行下载脚本
-RUN python download_model.py
+RUN python download_from_Artifactory_huggingface.py
 
 CMD ["python", "main.py"]
