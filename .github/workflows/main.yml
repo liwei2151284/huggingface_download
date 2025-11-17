@@ -1,0 +1,70 @@
+name: Push Build to Artifactory
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_id:
+        description: "HuggingFace model repo_id (For example：bert-base-uncased)"
+        required: true
+        default: "bert-base-uncased"
+
+permissions:
+  id-token: write
+
+jobs:
+ build:
+   runs-on: ubuntu-latest
+
+   env:
+      JOB_NAME: "kk_model_upload"
+      JFrog_Project: "kk"
+  
+   steps:
+   # This action checks out the code from the repository
+   - name: Checkout Code
+     uses: actions/checkout@v4
+
+   - name: Set up Docker Buildx
+     uses: docker/setup-buildx-action@v2
+
+   # This action sets up the JFrog CLI with the Artifactory URL and access token     
+   #- uses: jfrog/setup-jfrog-cli@v4
+   #  env:
+   #    JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
+   - name: Setup JFrog CLI
+     uses: jfrog/setup-jfrog-cli@v4
+     env:
+       JF_URL: https://soleng.jfrog.io
+     with:
+       oidc-provider-name: liwei-github-oidc 
+       oidc-audience: jfrog-github
+
+
+
+   # This command adds a new server configuration to the JFrog CLI   
+   #- run: |
+   #    export JFROG_CLI_LOG_LEVEL="debug"
+   #    jf config add demo --url "https://soleng.jfrog.io" --access-token ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }} --interactive=false
+   #    jf config use demo
+   # This action creates a new test file and uploads it to Artifactory   
+
+   - name: Build Docker Project and Push Docker image
+     run: |
+       docker build \
+        --build-arg HF_REPO_ID=${{ github.event.inputs.repo_id }} \
+        -t soleng.jfrog.io/kk-docker-local/${{ github.event.inputs.repo_id }}:$GITHUB_RUN_NUMBER . 
+        
+       jf docker push soleng.jfrog.io/kk-docker-local/${{ github.event.inputs.repo_id }}:$GITHUB_RUN_NUMBER --build-name=$JOB_NAME --build-number=$GITHUB_RUN_NUMBER  --project=$JFrog_Project
+       jf docker scan soleng.jfrog.io/kk-docker-local/${{ github.event.inputs.repo_id }}:$GITHUB_RUN_NUMBER --watches=docker-watch  --fail=false
+
+   # This action publishes the build information to Artifactory and deletes older builds
+   - name: Publish Build-Info to Artifactory
+     run: |
+
+       jf rt bce $JOB_NAME $GITHUB_RUN_NUMBER --project=$JFrog_Project 
+       jf rt bag $JOB_NAME $GITHUB_RUN_NUMBER --project=$JFrog_Project 
+       jf rt bp $JOB_NAME $GITHUB_RUN_NUMBER --project=$JFrog_Project
+
+   - name: Build Scan
+     run: |
+       jf bs $JOB_NAME $GITHUB_RUN_NUMBER   --fail=false  --project=$JFrog_Project 
