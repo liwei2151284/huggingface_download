@@ -43,5 +43,5 @@ jobs:
           HF_REPO_ID: ${{ github.event.inputs.repo_id }}
           HF_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
-          python download_from_huggingface.py
+          python download_from_Artifactory_huggingface.py
 
