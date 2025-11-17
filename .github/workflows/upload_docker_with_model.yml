@@ -35,9 +35,9 @@ jobs:
      uses: jfrog/setup-jfrog-cli@v4
      env:
        JF_URL: https://soleng.jfrog.io
-     with:
-       oidc-provider-name: liwei-github-oidc 
-       oidc-audience: jfrog-github
+
+       JF_ACCESS_TOKEN: ${{ secrets.HF_TOKEN }}
+    
 
 
 
