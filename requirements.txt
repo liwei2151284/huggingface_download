@@ -1,4 +1,4 @@
 huggingface_hub>=0.26.0
 tqdm>=4.66.0
 requests>=2.31.0
-frogml-cli
+#frogml-cli
