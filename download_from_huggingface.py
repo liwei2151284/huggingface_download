@@ -7,7 +7,6 @@ def main():
     revision_id = os.getenv("HF_RVERSION", "main")
 
     print(f"Start downloading model: {repo_id}")
-    print(f"Target dir: {local_dir}")
 
     snapshot_download(
         repo_id=repo_id, 
