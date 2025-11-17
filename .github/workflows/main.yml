@@ -41,7 +41,6 @@ jobs:
         env:
 
           HF_REPO_ID: ${{ github.event.inputs.repo_id }}
-          HF_LOCAL_DIR: ${{ github.event.inputs.local_dir }}
           HF_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: |
           python download_from_huggingface.py
