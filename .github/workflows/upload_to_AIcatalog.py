@@ -1,0 +1,45 @@
+name: Upload HuggingFace Model to Artifactory Local Repo
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      repo_id:
+        description: "HuggingFace model repo_id (For example：bert-base-uncased)"
+        required: true
+        default: "bert-base-uncased"
+
+jobs:
+  sync-model:
+    runs-on: ubuntu-latest
+
+    env:
+      # Artifactory Hugging Face endpoint
+        HF_REPO_ID: ${{ github.event.inputs.repo_id }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Download HuggingFace model via Artifactory
+        env:
+          HF_REPO_ID: ${{ github.event.inputs.repo_id }}
+        run: |
+          python download_from_Artifactory_huggingface.py
+
+          
+      - name: Upload model to AI Catalog with  FrogML
+        env:
+          JF_ACCESS_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+          JF_URL: https://soleng.jfrog.io
+        run: |
+          python upload_to_AI_Catalog.py      
