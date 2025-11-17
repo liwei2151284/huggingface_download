@@ -32,12 +32,8 @@ jobs:
      uses: jfrog/setup-jfrog-cli@v4
      env:
        JF_URL: https://soleng.jfrog.io
-
-       JF_ACCESS_TOKEN: ${{ secrets.HF_TOKEN }}
+       JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
     
-
-
-
    # This command adds a new server configuration to the JFrog CLI   
    #- run: |
    #    export JFROG_CLI_LOG_LEVEL="debug"
