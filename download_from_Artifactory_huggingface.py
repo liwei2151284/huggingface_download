@@ -11,7 +11,9 @@ def main():
     snapshot_download(
         repo_id=repo_id, 
         revision=revision_id, 
-        etag_timeout=86400
+        etag_timeout=86400,
+        local_dir = os.getenv("HF_LOCAL_DIR", f"./models/{repo_id}") 
+        
     )
 
     print("Model download finished!")
