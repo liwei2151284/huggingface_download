@@ -45,9 +45,3 @@ jobs:
         run: |
           python download_from_huggingface.py
 
-      - name: Upload model as artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: hf-model
-          path: ${{ github.event.inputs.local_dir }}
