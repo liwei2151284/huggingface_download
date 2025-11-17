@@ -44,3 +44,10 @@ jobs:
           HF_HUB_DOWNLOAD_TIMEOUT: "86400"
         run: |
           python upload_to_Artifactory_huggingface.py
+          
+      - name: Upload model to AI Catalog with  FrogML
+        env:
+          JF_ACCESS_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+          JF_URL: https://soleng.jfrog.io
+        run: |
+          python upload_to_AI_Catalog.py      
