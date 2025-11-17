@@ -12,7 +12,7 @@ def main():
 
     api = HfApi()
     api.upload_folder(
-        folder_path=folder_name, # folder to upload location on the FS
+        folder_path = os.getenv("HF_LOCAL_DIR", f"./models/{repo_id}") ,
         repo_id=repo_id, # defines the name under which model will be saved in the local repo. (models--${model_name})
         revision=revision_id, # represents git revision under which files are stored (main by default) (snapshots/${revision}/...files)
         repo_type="model"
