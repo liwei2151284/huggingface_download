@@ -8,7 +8,7 @@ def main():
     revision_id = os.getenv("HF_RVERSION", "main")
 
     base_projects_directory = os.getenv("HF_LOCAL_DIR", f"./models/{repo_id}") 
-    frogml.huggingface.log_model(  
+    frogml.files.log_model(  
         source_path = base_projects_directory,
         repository = "kk-huggingface-dev-local",    # The JFrog repository to upload the model to.
         model_name = repo_id,     # The uploaded model name
