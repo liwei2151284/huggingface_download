@@ -8,13 +8,14 @@ on:
         required: true
         default: "bert-base-uncased"
 
-  # push:
-  #   branches:
-  #     - main
-
 jobs:
-  download-model:
+  sync-model:
     runs-on: ubuntu-latest
+
+    env:
+      # Artifactory Hugging Face endpoint
+        HF_REPO_ID: ${{ github.event.inputs.repo_id }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,29 +35,12 @@ jobs:
           HF_REPO_ID: ${{ github.event.inputs.repo_id }}
         run: |
           python download_from_Artifactory_huggingface.py
-          
-  upload-model:
-    runs-on: ubuntu-latest
-    env:
-      #  Artifactory Hugging Face  endpoint
-      HF_ENDPOINT: "https://soleng.jfrog.io/artifactory/api/huggingfaceml/kk-huggingface-dev-local"
-      HF_HUB_ETAG_TIMEOUT: "86400"
-      HF_HUB_DOWNLOAD_TIMEOUT: "86400"
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-
-      - name: Download HuggingFace model via Artifactory
+      - name: Upload HuggingFace model to Artifactory Local Repo
         env:
-
-          HF_REPO_ID: ${{ github.event.inputs.repo_id }}
           HF_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+          HF_ENDPOINT: "https://soleng.jfrog.io/artifactory/api/huggingfaceml/kk-huggingface-dev-local"
+          HF_HUB_ETAG_TIMEOUT: "86400"
+          HF_HUB_DOWNLOAD_TIMEOUT: "86400"
         run: |
           python upload_to_Artifactory_huggingface.py
