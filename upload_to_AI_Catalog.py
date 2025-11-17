@@ -7,7 +7,7 @@ def main():
     repo_id = os.getenv("HF_REPO_ID", "test")
     revision_id = os.getenv("HF_RVERSION", "main")
 
-    base_projects_directory = os.getenv("HF_LOCAL_DIR", f"./models/{repo_id}") 
+    base_projects_directory = os.getenv("HF_LOCAL_DIR", f"./models/{repo_id}/tf_model.h5") 
     frogml.files.log_model(  
         source_path = base_projects_directory,
         repository = "kk-ML-local",    # The JFrog repository to upload the model to.
