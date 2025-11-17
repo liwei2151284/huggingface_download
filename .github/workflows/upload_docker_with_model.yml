@@ -8,9 +8,6 @@ on:
         required: true
         default: "bert-base-uncased"
 
-permissions:
-  id-token: write
-
 jobs:
  build:
    runs-on: ubuntu-latest
@@ -49,12 +46,12 @@ jobs:
    # This action creates a new test file and uploads it to Artifactory   
 
 
-  - name: Convert repo_id to lowercase
-    run: |
-      REPO_ID="${{ github.event.inputs.repo_id }}"
-      REPO_ID_LOWER="${REPO_ID,,}"
-      echo "REPO_ID_LOWER=$REPO_ID_LOWER" >> $GITHUB_ENV
-      echo "Lowercase: $REPO_ID_LOWER"
+   - name: Convert repo_id to lowercase
+     run: |
+        REPO_ID="${{ github.event.inputs.repo_id }}"
+        REPO_ID_LOWER="${REPO_ID,,}"
+        echo "REPO_ID_LOWER=$REPO_ID_LOWER" >> $GITHUB_ENV
+        echo "Lowercase: $REPO_ID_LOWER"
       
    - name: Build Docker Project and Push Docker image
      run: |
