@@ -3,7 +3,7 @@ import os
 from huggingface_hub import snapshot_download
 
 def main():
-    repo_id = os.getenv("HF_REPO_ID", "bert-base-uncased")
+    repo_id = os.getenv("HF_REPO_ID", "test")
     revision_id = os.getenv("HF_RVERSION", "main")
 
     print(f"Start downloading model: {repo_id}")
