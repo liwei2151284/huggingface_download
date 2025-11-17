@@ -19,7 +19,7 @@ jobs:
 
     env:
       #  Artifactory Hugging Face  endpoint
-      HF_ENDPOINT: "https://soleng.jfrog.io/artifactory/api/huggingfaceml/kk-huggingface-remote"
+      HF_ENDPOINT: "https://soleng.jfrog.io/artifactory/api/huggingfaceml/kk-kk-huggingface-remote"
       HF_HUB_ETAG_TIMEOUT: "86400"
       HF_HUB_DOWNLOAD_TIMEOUT: "86400"
 
