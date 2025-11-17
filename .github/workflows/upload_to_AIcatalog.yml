@@ -1,4 +1,4 @@
-name: Upload HuggingFace Model to Artifactory Local Repo
+name: Upload Model to Artifactory ML Local Repo
  
 on:
   workflow_dispatch:
