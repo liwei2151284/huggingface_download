@@ -11,7 +11,7 @@ def main():
     frogml.files.log_model(  
         source_path = base_projects_directory,
         repository = "kk-huggingface-dev-local",    # The JFrog repository to upload the model to.
-        model_name = repo_id,     # The uploaded model name
+        model_name = repo_id.split("/")[-1],     # The uploaded model name
         version = revision_id     # Optional. The uploaded model version
     )
     print("--- Model Logged Successfully ---")
