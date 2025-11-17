@@ -5,7 +5,6 @@ from huggingface_hub import HfApi
 def main():
     repo_id = os.getenv("HF_REPO_ID", "test")
     revision_id = os.getenv("HF_RVERSION", "main")
-    folder_name = os.getenv("FOLDER_NAME", "/data/models/")
   
 
     print(f"Start uploading model: {repo_id}")
