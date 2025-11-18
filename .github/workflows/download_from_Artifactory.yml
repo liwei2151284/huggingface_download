@@ -39,7 +39,7 @@ jobs:
          secret: ${{ secrets.GITHUB_TOKEN }}
          approvers: liwei2151284
          issue-title: "Approve promotion for ${{ github.workflow }} #${{ github.run_number }}"
-         minimum-approvals: 60  
+         minimum-approvals: 1 
          
       - name: Install dependencies
         run: |
