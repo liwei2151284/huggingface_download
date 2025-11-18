@@ -36,10 +36,10 @@ jobs:
         id: wait-approval
         uses: trstringer/manual-approval@v1
         with:
-         token: ${{ secrets.GITHUB_TOKEN }}
+         secret: ${{ secrets.GITHUB_TOKEN }}
          approvers: liwei2151284
          issue-title: "Approve promotion for ${{ github.workflow }} #${{ github.run_number }}"
-         timeout-minutes: 60  
+         minimum-approvals: 60  
          
       - name: Install dependencies
         run: |
