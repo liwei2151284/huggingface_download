@@ -34,7 +34,7 @@ jobs:
 
       - name: Manual approval
         id: wait-approval
-        uses: peter-evans/wait-for-approval@v3
+        uses: trstringer/manual-approval@v1
         with:
          token: ${{ secrets.GITHUB_TOKEN }}
          approvers: liwei2151284
