@@ -39,7 +39,7 @@ jobs:
       - name: Upload HuggingFace model to Artifactory Local Repo
         env:
           HF_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
-          HF_ENDPOINT: "https://soleng.jfrog.io/artifactory/api/huggingfaceml/kk-huggingface-dev-local"
+          HF_ENDPOINT: "https://demo.jfrogchina.com/artifactory/api/huggingfaceml/liweiml-huggingface-xraytest-local"
           HF_HUB_ETAG_TIMEOUT: "86400"
           HF_HUB_DOWNLOAD_TIMEOUT: "86400"
         run: |
