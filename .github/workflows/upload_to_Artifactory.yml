@@ -20,6 +20,7 @@ jobs:
     env:
       # Artifactory Hugging Face endpoint
         HF_REPO_ID: ${{ github.event.inputs.repo_id }}
+        HF_RVERSION: ${{ github.event.inputs.revision_id  }}
 
     steps:
       - name: Checkout repository
